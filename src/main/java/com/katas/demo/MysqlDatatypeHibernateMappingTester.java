@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,6 +30,7 @@ public class MysqlDatatypeHibernateMappingTester implements ApplicationRunner {
         p.setGender(Gender.M);
         p.setName("Amit");
         p.setFavouritefood(Favouritefood.uppit);
+        p.setDescription("sample projects is really a great way to test features and feel confident about using them");
         repo.save(p);
     }
 
@@ -46,7 +48,16 @@ enum Favouritefood{
 }
 
 
-
+/**
+ * 
+ *  Type | Maximum length
+-----------+-------------------------------------
+  TINYTEXT |           255 (2 8−1) bytes
+      TEXT |        65,535 (216−1) bytes = 64 KiB
+MEDIUMTEXT |    16,777,215 (224−1) bytes = 16 MiB
+  LONGTEXT | 4,294,967,295 (232−1) bytes =  4 GiB
+ *
+ */
 @Entity
 @Data
 class Person {
@@ -64,7 +75,11 @@ class Person {
     @Enumerated(EnumType.STRING)
     Favouritefood favouritefood;
     
+    @Column(columnDefinition="mediumtext")
+    String description;
+    
 }
+
 
 
 interface PersonRepo extends JpaRepository<Person, Long> {
