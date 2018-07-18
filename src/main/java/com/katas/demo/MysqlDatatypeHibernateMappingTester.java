@@ -31,6 +31,8 @@ public class MysqlDatatypeHibernateMappingTester implements ApplicationRunner {
         p.setName("Amit");
         p.setFavouritefood(Favouritefood.uppit);
         p.setDescription("sample projects is really a great way to test features and feel confident about using them");
+        p.setAboutme("this is amit.");
+        p.setStoryOfMyLife("story of my life");
         repo.save(p);
     }
 
@@ -77,6 +79,12 @@ class Person {
     
     @Column(columnDefinition="mediumtext")
     String description;
+    
+    @Column(columnDefinition="text")
+    String aboutme;
+    
+    @Column(columnDefinition="longtext")
+    String storyOfMyLife;
     
 }
 
